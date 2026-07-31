@@ -10,33 +10,206 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AssistantRouteImport } from './routes/assistant'
+import { Route as AutomationRouteImport } from './routes/automation'
+import { Route as BackupRouteImport } from './routes/backup'
+import { Route as BatteryRouteImport } from './routes/battery'
+import { Route as DoctorRouteImport } from './routes/doctor'
+import { Route as LogsRouteImport } from './routes/logs'
+import { Route as NetworkRouteImport } from './routes/network'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as PerformanceRouteImport } from './routes/performance'
+import { Route as PermissionsRouteImport } from './routes/permissions'
+import { Route as ProfilesRouteImport } from './routes/profiles'
+import { Route as SettingsRouteImport } from './routes/settings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationRoute = AutomationRouteImport.update({
+  id: '/automation',
+  path: '/automation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BackupRoute = BackupRouteImport.update({
+  id: '/backup',
+  path: '/backup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BatteryRoute = BatteryRouteImport.update({
+  id: '/battery',
+  path: '/battery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoctorRoute = DoctorRouteImport.update({
+  id: '/doctor',
+  path: '/doctor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogsRoute = LogsRouteImport.update({
+  id: '/logs',
+  path: '/logs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NetworkRoute = NetworkRouteImport.update({
+  id: '/network',
+  path: '/network',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerformanceRoute = PerformanceRouteImport.update({
+  id: '/performance',
+  path: '/performance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PermissionsRoute = PermissionsRouteImport.update({
+  id: '/permissions',
+  path: '/permissions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfilesRoute = ProfilesRouteImport.update({
+  id: '/profiles',
+  path: '/profiles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/assistant': typeof AssistantRoute
+  '/automation': typeof AutomationRoute
+  '/backup': typeof BackupRoute
+  '/battery': typeof BatteryRoute
+  '/doctor': typeof DoctorRoute
+  '/logs': typeof LogsRoute
+  '/network': typeof NetworkRoute
+  '/onboarding': typeof OnboardingRoute
+  '/performance': typeof PerformanceRoute
+  '/permissions': typeof PermissionsRoute
+  '/profiles': typeof ProfilesRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/assistant': typeof AssistantRoute
+  '/automation': typeof AutomationRoute
+  '/backup': typeof BackupRoute
+  '/battery': typeof BatteryRoute
+  '/doctor': typeof DoctorRoute
+  '/logs': typeof LogsRoute
+  '/network': typeof NetworkRoute
+  '/onboarding': typeof OnboardingRoute
+  '/performance': typeof PerformanceRoute
+  '/permissions': typeof PermissionsRoute
+  '/profiles': typeof ProfilesRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/assistant': typeof AssistantRoute
+  '/automation': typeof AutomationRoute
+  '/backup': typeof BackupRoute
+  '/battery': typeof BatteryRoute
+  '/doctor': typeof DoctorRoute
+  '/logs': typeof LogsRoute
+  '/network': typeof NetworkRoute
+  '/onboarding': typeof OnboardingRoute
+  '/performance': typeof PerformanceRoute
+  '/permissions': typeof PermissionsRoute
+  '/profiles': typeof ProfilesRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/assistant'
+    | '/automation'
+    | '/backup'
+    | '/battery'
+    | '/doctor'
+    | '/logs'
+    | '/network'
+    | '/onboarding'
+    | '/performance'
+    | '/permissions'
+    | '/profiles'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/assistant'
+    | '/automation'
+    | '/backup'
+    | '/battery'
+    | '/doctor'
+    | '/logs'
+    | '/network'
+    | '/onboarding'
+    | '/performance'
+    | '/permissions'
+    | '/profiles'
+    | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/assistant'
+    | '/automation'
+    | '/backup'
+    | '/battery'
+    | '/doctor'
+    | '/logs'
+    | '/network'
+    | '/onboarding'
+    | '/performance'
+    | '/permissions'
+    | '/profiles'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AssistantRoute: typeof AssistantRoute
+  AutomationRoute: typeof AutomationRoute
+  BackupRoute: typeof BackupRoute
+  BatteryRoute: typeof BatteryRoute
+  DoctorRoute: typeof DoctorRoute
+  LogsRoute: typeof LogsRoute
+  NetworkRoute: typeof NetworkRoute
+  OnboardingRoute: typeof OnboardingRoute
+  PerformanceRoute: typeof PerformanceRoute
+  PermissionsRoute: typeof PermissionsRoute
+  ProfilesRoute: typeof ProfilesRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +221,116 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation': {
+      id: '/automation'
+      path: '/automation'
+      fullPath: '/automation'
+      preLoaderRoute: typeof AutomationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/backup': {
+      id: '/backup'
+      path: '/backup'
+      fullPath: '/backup'
+      preLoaderRoute: typeof BackupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/battery': {
+      id: '/battery'
+      path: '/battery'
+      fullPath: '/battery'
+      preLoaderRoute: typeof BatteryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctor': {
+      id: '/doctor'
+      path: '/doctor'
+      fullPath: '/doctor'
+      preLoaderRoute: typeof DoctorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logs': {
+      id: '/logs'
+      path: '/logs'
+      fullPath: '/logs'
+      preLoaderRoute: typeof LogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/network': {
+      id: '/network'
+      path: '/network'
+      fullPath: '/network'
+      preLoaderRoute: typeof NetworkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/performance': {
+      id: '/performance'
+      path: '/performance'
+      fullPath: '/performance'
+      preLoaderRoute: typeof PerformanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/permissions': {
+      id: '/permissions'
+      path: '/permissions'
+      fullPath: '/permissions'
+      preLoaderRoute: typeof PermissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profiles': {
+      id: '/profiles'
+      path: '/profiles'
+      fullPath: '/profiles'
+      preLoaderRoute: typeof ProfilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AssistantRoute: AssistantRoute,
+  AutomationRoute: AutomationRoute,
+  BackupRoute: BackupRoute,
+  BatteryRoute: BatteryRoute,
+  DoctorRoute: DoctorRoute,
+  LogsRoute: LogsRoute,
+  NetworkRoute: NetworkRoute,
+  OnboardingRoute: OnboardingRoute,
+  PerformanceRoute: PerformanceRoute,
+  PermissionsRoute: PermissionsRoute,
+  ProfilesRoute: ProfilesRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
