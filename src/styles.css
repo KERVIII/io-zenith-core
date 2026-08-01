@@ -291,3 +291,15 @@ html {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* High contrast / forced colors: keep chrome and focus visible. */
+@media (forced-colors: active) {
+  .glass-surface {
+    backdrop-filter: none;
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+  :focus-visible {
+    outline: 3px solid Highlight;
+  }
+}
