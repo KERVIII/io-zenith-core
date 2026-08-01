@@ -1,31 +1,35 @@
-# IoBattery Pro
+IO Zenith Core
 
-# IoBattery Pro — Product Planning Document (PRD)
+IO Zenith Core is an Android optimization project that focuses on improving battery life, system responsiveness, and overall device stability without relying on aggressive or unsafe tweaks.
 
+The project is currently under development, and some features may change as development progresses.
 
+Current Focus
 
-STOP.
+- Battery optimization
+- Performance tuning
+- Thermal management
+- Memory optimization
+- Root integration
+- Modern Android UI
 
+Compatibility
 
+Requirement| Status
+Android 8+| ✔
+KernelSU| ✔
+Magisk| ✔
+ARM64| ✔
 
-Do NOT generate any code.
+Development
 
+This repository is actively maintained. Expect frequent commits, refactoring, and experimental changes while the project is being developed.
 
+Issues and pull requests are welcome.
 
-Do NOT create UI mockups.
+License
 
-
-
-Do NOT create React components.
-
-
-
-Do NOT build anything.
-
-
-
-You are now acting as the Product Team responsible for designing IoBattery Pro before engineering begins.
-
+See the LICENSE file for licensing information.
 
 
 You are simultaneously acting as:
