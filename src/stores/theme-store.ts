@@ -63,10 +63,20 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
   ...DEFAULTS,
   hydrated: false,
   hydrate: () => {
-    const stored = loadPersisted<Snapshot>(KEY, DEFAULTS);
+    const raw = loadPersisted<Partial<Snapshot>>(KEY, DEFAULTS);
+    const stored: Snapshot = {
+      theme: THEMES.some((t) => t.id === raw?.theme) ? (raw.theme as ThemeId) : DEFAULTS.theme,
+      density: raw?.density === "compact" ? "compact" : "comfortable",
+      reduceMotion: Boolean(raw?.reduceMotion),
+      fontScale:
+        typeof raw?.fontScale === "number" && raw.fontScale >= 0.8 && raw.fontScale <= 1.6
+          ? raw.fontScale
+          : 1,
+    };
     set({ ...stored, hydrated: true });
     applyThemeToDocument(stored);
   },
+
   setTheme: (theme) => {
     set({ theme });
     applyThemeToDocument({ ...get(), theme });

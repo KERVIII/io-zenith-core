@@ -241,7 +241,7 @@ function Onboarding() {
   const Icon = current.icon;
 
   return (
-    <div className="flex min-h-screen flex-col bg-background px-4 py-6 text-foreground">
+    <div className="flex min-h-dvh flex-col bg-background px-4 py-6 text-foreground">
       <div className="mx-auto flex w-full max-w-lg flex-1 flex-col">
         <Progress value={((step + 1) / STEP_COUNT) * 100} className="h-1" />
         <p className="mt-2 text-xs text-on-surface-variant">

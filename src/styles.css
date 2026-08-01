@@ -170,7 +170,7 @@
   --status-unknown: oklch(0.6 0.02 255);
   --energy: oklch(0.62 0.18 250);
   --app-font-scale: 1;
-  --surface-blur: 0px;
+  --surface-blur: 12px;
 }
 
 .dark {
@@ -290,4 +290,16 @@ html {
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+/* High contrast / forced colors: keep chrome and focus visible. */
+@media (forced-colors: active) {
+  .glass-surface {
+    backdrop-filter: none;
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+  :focus-visible {
+    outline: 3px solid Highlight;
+  }
 }
