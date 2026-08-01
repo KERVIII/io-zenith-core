@@ -126,26 +126,31 @@ function NavTab({
 export function FloatingNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const reduced = useReducedMotion();
+  const controls = useAnimationControls();
+
+  /* Buoyancy: a single gentle lift-and-settle on each tab change, never a
+     perpetual loop (which would fight assistive tech and burn battery on an
+     always-visible surface). */
+  useEffect(() => {
+    if (reduced) {
+      void controls.set({ opacity: 1, y: 0, scale: 1 });
+      return;
+    }
+    void controls.start({
+      opacity: 1,
+      y: [4, -2, 0],
+      scale: [0.99, 1.005, 1],
+      transition: { duration: 0.6, ease: [0.22, 0.61, 0.36, 1] },
+    });
+  }, [pathname, reduced, controls]);
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center pb-[calc(env(safe-area-inset-bottom)+1.25rem)]">
       <motion.nav
         aria-label="Primary"
-        /* Buoyancy: a single gentle lift-and-settle on each tab change,
-           never a perpetual loop (which would fight assistive tech and
-           burn battery on an always-visible surface). */
-        key={reduced ? "static" : undefined}
         initial={reduced ? false : { opacity: 0, y: 14 }}
-        animate={
-          reduced
-            ? { opacity: 1, y: 0, scale: 1 }
-            : { opacity: 1, y: [3, -1.5, 0], scale: [0.99, 1.004, 1] }
-        }
-        transition={
-          reduced
-            ? { duration: 0 }
-            : { duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }
-        }
+        animate={controls}
+
 
         className={cn(
           "glass-surface pointer-events-auto w-[min(28rem,calc(100%-1.5rem))] rounded-full",
