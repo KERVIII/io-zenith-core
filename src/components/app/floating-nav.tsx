@@ -131,20 +131,22 @@ export function FloatingNav() {
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center pb-[calc(env(safe-area-inset-bottom)+1.25rem)]">
       <motion.nav
         aria-label="Primary"
-        initial={reduced ? false : { opacity: 0, y: 16 }}
+        /* Buoyancy: a single gentle lift-and-settle on each tab change,
+           never a perpetual loop (which would fight assistive tech and
+           burn battery on an always-visible surface). */
+        key={reduced ? "static" : undefined}
+        initial={reduced ? false : { opacity: 0, y: 14 }}
         animate={
           reduced
-            ? { opacity: 1, y: 0 }
-            : { opacity: 1, y: [0, -2.5, 0] }
+            ? { opacity: 1, y: 0, scale: 1 }
+            : { opacity: 1, y: [3, -1.5, 0], scale: [0.99, 1.004, 1] }
         }
         transition={
           reduced
             ? { duration: 0 }
-            : {
-                opacity: { duration: 0.35 },
-                y: { duration: 6.5, repeat: Infinity, ease: "easeInOut" },
-              }
+            : { duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }
         }
+
         className={cn(
           "glass-surface pointer-events-auto w-[min(28rem,calc(100%-1.5rem))] rounded-full",
           "border border-border/70 bg-card/70 shadow-[0_18px_45px_-16px_rgba(0,0,0,0.65),0_2px_8px_-2px_rgba(0,0,0,0.4)]",
