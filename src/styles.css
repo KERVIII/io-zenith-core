@@ -170,7 +170,7 @@
   --status-unknown: oklch(0.6 0.02 255);
   --energy: oklch(0.62 0.18 250);
   --app-font-scale: 1;
-  --surface-blur: 0px;
+  --surface-blur: 12px;
 }
 
 .dark {
