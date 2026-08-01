@@ -103,9 +103,19 @@ export const useAutomationStore = create<AutomationState>((set, get) => ({
   hydrated: false,
 
   hydrate: () => {
-    const stored = loadPersisted<Snapshot>(KEY, { rules: DEFAULT_RULES, engineEnabled: false });
-    set({ rules: stored.rules, engineEnabled: stored.engineEnabled, hydrated: true });
+    const stored = loadPersisted<Partial<Snapshot>>(KEY, {
+      rules: DEFAULT_RULES,
+      engineEnabled: false,
+    });
+    set({
+      rules: Array.isArray(stored?.rules)
+        ? stored.rules.filter((r) => r && typeof r.id === "string" && r.trigger && r.action)
+        : DEFAULT_RULES,
+      engineEnabled: Boolean(stored?.engineEnabled),
+      hydrated: true,
+    });
   },
+
 
   toggleEngine: (engineEnabled) => {
     set({ engineEnabled });
