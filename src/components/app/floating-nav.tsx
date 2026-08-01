@@ -70,7 +70,7 @@ function NavTab({
         }}
         className={cn(
           "relative flex min-h-12 min-w-11 flex-col items-center justify-center gap-1 overflow-hidden rounded-full px-1 py-2",
-          "text-[11px] font-medium outline-offset-2 transition-colors",
+          "text-[0.7rem] font-medium outline-offset-2 transition-colors",
           active ? "text-primary" : "text-on-surface-variant hover:text-foreground",
         )}
       >
@@ -154,7 +154,7 @@ export function FloatingNav() {
 
         className={cn(
           "glass-surface pointer-events-auto w-[min(28rem,calc(100%-1.5rem))] rounded-full",
-          "border border-border/70 bg-card/70 shadow-[0_18px_45px_-16px_rgba(0,0,0,0.65),0_2px_8px_-2px_rgba(0,0,0,0.4)]",
+          "border border-border bg-card/85 shadow-[0_18px_45px_-16px_rgba(0,0,0,0.65),0_2px_8px_-2px_rgba(0,0,0,0.4)]",
         )}
       >
         <ul className="flex items-stretch justify-between gap-0.5 px-1.5 py-1.5">
