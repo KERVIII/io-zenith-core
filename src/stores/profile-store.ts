@@ -153,19 +153,27 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
   hydrated: false,
 
   hydrate: () => {
-    const stored = loadPersisted<Snapshot>(KEY, {
+    const stored = loadPersisted<Partial<Snapshot>>(KEY, {
       profiles: BUILT_IN,
       activeId: null,
       autoSwitch: false,
     });
-    const custom = stored.profiles.filter((p) => !p.builtIn);
+    const custom = Array.isArray(stored?.profiles)
+      ? stored.profiles.filter((p) => p && typeof p.id === "string" && !p.builtIn)
+      : [];
+    const profiles = [...BUILT_IN, ...custom];
+    const activeId =
+      typeof stored?.activeId === "string" && profiles.some((p) => p.id === stored.activeId)
+        ? stored.activeId
+        : null;
     set({
-      profiles: [...BUILT_IN, ...custom],
-      activeId: stored.activeId,
-      autoSwitch: stored.autoSwitch,
+      profiles,
+      activeId,
+      autoSwitch: Boolean(stored?.autoSwitch),
       hydrated: true,
     });
   },
+
 
   setActive: (activeId) => {
     set({ activeId });
