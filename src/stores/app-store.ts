@@ -88,9 +88,29 @@ export const useAppStore = create<AppState>((set, get) => ({
   hydrated: false,
 
   hydrate: () => {
-    const stored = loadPersisted<Snapshot>(KEY, DEFAULTS);
-    set({ ...stored, hydrated: true });
+    const stored = loadPersisted<Partial<Snapshot>>(KEY, DEFAULTS);
+    // Persisted state can be stale or corrupted (older schema, manual edits).
+    // Coerce every field back to its expected shape instead of crashing.
+    const permissions = Array.isArray(stored?.permissions)
+      ? DEFAULT_PERMISSIONS.map((base) => {
+          const match = (stored.permissions as PermissionState[]).find((p) => p?.id === base.id);
+          return { ...base, granted: Boolean(match?.granted) };
+        })
+      : DEFAULT_PERMISSIONS;
+
+    set({
+      onboardingComplete: Boolean(stored?.onboardingComplete),
+      permissions,
+      favorites: Array.isArray(stored?.favorites)
+        ? stored.favorites.filter((f): f is string => typeof f === "string")
+        : DEFAULTS.favorites,
+      restorePoints: Array.isArray(stored?.restorePoints)
+        ? stored.restorePoints.filter((p) => p && typeof p.id === "string")
+        : [],
+      hydrated: true,
+    });
   },
+
 
   setStep: (onboardingStep) => set({ onboardingStep }),
 
