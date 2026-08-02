@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { applyThemeToDocument, useThemeStore } from "@/stores/theme-store";
 import { useAppStore } from "@/stores/app-store";
 import { useProfileStore } from "@/stores/profile-store";
@@ -12,9 +11,6 @@ import { useAutomationEngine } from "@/hooks/use-automation-engine";
  * routes first-run users into onboarding. Renders nothing.
  */
 export function AppBootstrap() {
-  const navigate = useNavigate();
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-
   const hydrateTheme = useThemeStore((s) => s.hydrate);
   const hydrateApp = useAppStore((s) => s.hydrate);
   const hydrateProfiles = useProfileStore((s) => s.hydrate);
@@ -26,9 +22,6 @@ export function AppBootstrap() {
   const density = useThemeStore((s) => s.density);
   const reduceMotion = useThemeStore((s) => s.reduceMotion);
   const fontScale = useThemeStore((s) => s.fontScale);
-
-  const appHydrated = useAppStore((s) => s.hydrated);
-  const onboardingComplete = useAppStore((s) => s.onboardingComplete);
 
   useAutomationEngine();
 
