@@ -127,6 +127,90 @@ function Dashboard() {
         </CardContent>
       </Card>
 
+      {/* Device health score */}
+      <Card className="border-border bg-card py-0">
+        <CardContent className="space-y-3 p-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="text-sm font-semibold">Device health</h2>
+            <p className="text-xs text-on-surface-variant">
+              {health.value === null
+                ? "no measurable factors"
+                : `${health.measured} of ${health.total} factors measured`}
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div
+              className={cn(
+                "flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl",
+                `bg-status-${health.tone}/12 text-status-${health.tone}`,
+              )}
+              role="img"
+              aria-label={
+                health.value === null
+                  ? "Health score unavailable"
+                  : `Health score ${health.value} out of 100`
+              }
+            >
+              <span className="text-xl font-semibold tabular-nums">
+                {health.value ?? "—"}
+              </span>
+              <span className="text-[10px] uppercase tracking-wide">score</span>
+            </div>
+            <div className="min-w-0 flex-1 space-y-1.5">
+              <p className="text-sm font-medium">{health.headline}</p>
+              <ul className="space-y-1">
+                {health.factors.map((factor) => (
+                  <li
+                    key={factor.id}
+                    className="flex items-baseline justify-between gap-2 text-[11px]"
+                  >
+                    <span className="text-on-surface-variant">{factor.label}</span>
+                    <span
+                      className={cn(
+                        "truncate text-right",
+                        factor.score === null
+                          ? "text-on-surface-variant italic"
+                          : "text-foreground",
+                      )}
+                    >
+                      {factor.detail}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick actions */}
+      <section aria-labelledby="quick-actions-heading" className="space-y-2">
+        <h2 id="quick-actions-heading" className="px-1 text-sm font-semibold">
+          Quick actions
+        </h2>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { to: "/doctor", label: "Device Doctor", icon: Stethoscope },
+            { to: "/automation", label: "Automation", icon: Workflow },
+            { to: "/learn", label: "Learning centre", icon: GraduationCap },
+            { to: "/logs", label: "Developer console", icon: ScrollText },
+          ].map(({ to, label, icon: ActionIcon }) => (
+            <Button
+              key={to}
+              asChild
+              variant="secondary"
+              className="min-h-14 justify-start rounded-2xl"
+            >
+              <Link to={to}>
+                <ActionIcon className="mr-2 h-4 w-4 text-primary" aria-hidden />
+                <span className="truncate text-xs font-medium">{label}</span>
+              </Link>
+            </Button>
+          ))}
+        </div>
+      </section>
+
+
       {/* Key metrics */}
       <section aria-labelledby="metrics-heading" className="space-y-2">
         <h2 id="metrics-heading" className="px-1 text-sm font-semibold">
