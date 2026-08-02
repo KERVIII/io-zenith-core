@@ -275,6 +275,55 @@ function Dashboard() {
         ))}
       </section>
 
+      {/* Recent activity */}
+      {recentActivity.length > 0 && (
+        <section aria-labelledby="activity-heading" className="space-y-2">
+          <div className="flex items-center justify-between px-1">
+            <h2 id="activity-heading" className="text-sm font-semibold">
+              Recent activity
+            </h2>
+            <Link to="/logs" className="text-xs text-primary">
+              Open console
+            </Link>
+          </div>
+          <Card className="border-border bg-card py-0">
+            <CardContent className="p-0">
+              <ul className="divide-y divide-border">
+                {recentActivity.map((entry) => (
+                  <li key={entry.id} className="flex items-start gap-3 px-4 py-3">
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full",
+                        entry.level === "error"
+                          ? "bg-status-critical"
+                          : entry.level === "warn"
+                            ? "bg-status-warning"
+                            : entry.level === "success"
+                              ? "bg-status-healthy"
+                              : "bg-primary",
+                      )}
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-xs">{entry.message}</span>
+                      <span className="block text-[11px] text-on-surface-variant">
+                        {entry.tag} ·{" "}
+                        {new Date(entry.at).toLocaleTimeString(undefined, {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        })}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </section>
+      )}
+
+
       {/* Favorites */}
       {favorites.length > 0 && (
         <section aria-labelledby="fav-heading" className="space-y-2">
