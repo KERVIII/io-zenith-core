@@ -19,6 +19,7 @@ export function AppBootstrap() {
   const hydrateApp = useAppStore((s) => s.hydrate);
   const hydrateProfiles = useProfileStore((s) => s.hydrate);
   const hydrateAutomation = useAutomationStore((s) => s.hydrate);
+  const hydrateLearn = useLearnStore((s) => s.hydrate);
 
   const themeHydrated = useThemeStore((s) => s.hydrated);
   const theme = useThemeStore((s) => s.theme);
