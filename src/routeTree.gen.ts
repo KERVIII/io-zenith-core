@@ -16,6 +16,7 @@ import { Route as AutomationRouteImport } from './routes/automation'
 import { Route as BackupRouteImport } from './routes/backup'
 import { Route as BatteryRouteImport } from './routes/battery'
 import { Route as DoctorRouteImport } from './routes/doctor'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LogsRouteImport } from './routes/logs'
 import { Route as NetworkRouteImport } from './routes/network'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -57,6 +58,11 @@ const BatteryRoute = BatteryRouteImport.update({
 const DoctorRoute = DoctorRouteImport.update({
   id: '/doctor',
   path: '/doctor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LogsRoute = LogsRouteImport.update({
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/backup': typeof BackupRoute
   '/battery': typeof BatteryRoute
   '/doctor': typeof DoctorRoute
+  '/learn': typeof LearnRoute
   '/logs': typeof LogsRoute
   '/network': typeof NetworkRoute
   '/onboarding': typeof OnboardingRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/backup': typeof BackupRoute
   '/battery': typeof BatteryRoute
   '/doctor': typeof DoctorRoute
+  '/learn': typeof LearnRoute
   '/logs': typeof LogsRoute
   '/network': typeof NetworkRoute
   '/onboarding': typeof OnboardingRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/backup': typeof BackupRoute
   '/battery': typeof BatteryRoute
   '/doctor': typeof DoctorRoute
+  '/learn': typeof LearnRoute
   '/logs': typeof LogsRoute
   '/network': typeof NetworkRoute
   '/onboarding': typeof OnboardingRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/backup'
     | '/battery'
     | '/doctor'
+    | '/learn'
     | '/logs'
     | '/network'
     | '/onboarding'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/backup'
     | '/battery'
     | '/doctor'
+    | '/learn'
     | '/logs'
     | '/network'
     | '/onboarding'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/backup'
     | '/battery'
     | '/doctor'
+    | '/learn'
     | '/logs'
     | '/network'
     | '/onboarding'
@@ -203,6 +215,7 @@ export interface RootRouteChildren {
   BackupRoute: typeof BackupRoute
   BatteryRoute: typeof BatteryRoute
   DoctorRoute: typeof DoctorRoute
+  LearnRoute: typeof LearnRoute
   LogsRoute: typeof LogsRoute
   NetworkRoute: typeof NetworkRoute
   OnboardingRoute: typeof OnboardingRoute
@@ -261,6 +274,13 @@ declare module '@tanstack/react-router' {
       path: '/doctor'
       fullPath: '/doctor'
       preLoaderRoute: typeof DoctorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/logs': {
@@ -323,6 +343,7 @@ const rootRouteChildren: RootRouteChildren = {
   BackupRoute: BackupRoute,
   BatteryRoute: BatteryRoute,
   DoctorRoute: DoctorRoute,
+  LearnRoute: LearnRoute,
   LogsRoute: LogsRoute,
   NetworkRoute: NetworkRoute,
   OnboardingRoute: OnboardingRoute,
