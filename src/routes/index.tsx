@@ -75,11 +75,14 @@ function Dashboard() {
   const profiles = useProfileStore((s) => s.profiles);
   const activeId = useProfileStore((s) => s.activeId);
   const favorites = useAppStore((s) => s.favorites);
+  const logEntries = useLogStore((s) => s.entries);
 
   const active = profiles.find((p) => p.id === activeId);
   const state = verdict(telemetry.level.value, telemetry.temperature.value);
   const Icon = TONE_ICON[state.tone];
   const insights = analyzeDevice(telemetry, capabilities, history).slice(0, 2);
+  const health = computeHealthScore(telemetry, history);
+  const recentActivity = logEntries.slice(-4).reverse();
 
   return (
     <AppShell title="Dashboard">
