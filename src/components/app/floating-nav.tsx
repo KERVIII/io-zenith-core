@@ -222,7 +222,7 @@ export function FloatingNav() {
         initial={reduced ? false : { opacity: 0, y: 14 }}
         animate={controls}
         className={cn(
-          "glass-surface pointer-events-auto w-[min(30rem,calc(100%-1.25rem))] rounded-full",
+          "glass-surface pointer-events-auto relative w-[min(30rem,calc(100%-1.25rem))] rounded-full",
           "border border-border bg-card/85 shadow-[0_18px_45px_-16px_rgba(0,0,0,0.65),0_2px_8px_-2px_rgba(0,0,0,0.4)]",
         )}
       >
