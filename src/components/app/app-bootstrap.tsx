@@ -51,16 +51,10 @@ export function AppBootstrap() {
   useEffect(() => {
     if (!appHydrated || !routerIdle) return;
     if (onboardingComplete || pathname === "/onboarding") return;
-    let raf2 = 0;
-    const raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        void navigate({ to: "/onboarding", replace: true });
-      });
-    });
-    return () => {
-      cancelAnimationFrame(raf1);
-      if (raf2) cancelAnimationFrame(raf2);
-    };
+    const timer = window.setTimeout(() => {
+      void navigate({ to: "/onboarding", replace: true });
+    }, 300);
+    return () => window.clearTimeout(timer);
   }, [appHydrated, routerIdle, onboardingComplete, pathname, navigate]);
 
   return null;
