@@ -37,7 +37,8 @@ export function AppBootstrap() {
     hydrateApp();
     hydrateProfiles();
     hydrateAutomation();
-  }, [hydrateTheme, hydrateApp, hydrateProfiles, hydrateAutomation]);
+    hydrateLearn();
+  }, [hydrateTheme, hydrateApp, hydrateProfiles, hydrateAutomation, hydrateLearn]);
 
   useEffect(() => {
     if (!themeHydrated) return;
