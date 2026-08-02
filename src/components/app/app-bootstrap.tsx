@@ -45,11 +45,16 @@ export function AppBootstrap() {
     applyThemeToDocument({ theme, density, reduceMotion, fontScale });
   }, [themeHydrated, theme, density, reduceMotion, fontScale]);
 
+  /* Defer the first-run redirect to a task after commit: navigating while the
+     router is still committing the initial match tears that match down
+     mid-render and trips an internal match-lookup invariant. */
   useEffect(() => {
     if (!appHydrated) return;
-    if (!onboardingComplete && pathname !== "/onboarding") {
+    if (onboardingComplete || pathname === "/onboarding") return;
+    const timer = window.setTimeout(() => {
       void navigate({ to: "/onboarding", replace: true });
-    }
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [appHydrated, onboardingComplete, pathname, navigate]);
 
   return null;
