@@ -45,17 +45,10 @@ export function AppBootstrap() {
     applyThemeToDocument({ theme, density, reduceMotion, fontScale });
   }, [themeHydrated, theme, density, reduceMotion, fontScale]);
 
-  /* Defer the first-run redirect to a task after commit: navigating while the
-     router is still committing the initial match tears that match down
-     mid-render and trips an internal match-lookup invariant. */
-  useEffect(() => {
-    if (!appHydrated) return;
-    if (onboardingComplete || pathname === "/onboarding") return;
-    const timer = window.setTimeout(() => {
-      void navigate({ to: "/onboarding", replace: true });
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, [appHydrated, onboardingComplete, pathname, navigate]);
+  /* The first-run redirect lives in the root route's beforeLoad — see
+     src/routes/__root.tsx. Redirecting from an effect here tore down the
+     freshly committed match and tripped a router invariant. */
+
 
   return null;
 }
