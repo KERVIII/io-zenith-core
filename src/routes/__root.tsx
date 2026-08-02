@@ -3,6 +3,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  redirect,
   useRouter,
   HeadContent,
   Scripts,
@@ -13,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppBootstrap } from "@/components/app/app-bootstrap";
 import { Toaster } from "@/components/ui/sonner";
+import { loadPersisted } from "@/stores/persist";
 
 
 function NotFoundComponent() {
@@ -96,6 +98,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+
+  /* First-run gate. Doing this in beforeLoad (client-only, since the flag
+     lives in local storage) avoids redirecting from inside an effect, which
+     tears down the freshly committed match and trips a router invariant. */
+  beforeLoad: ({ location }) => {
+    if (typeof window === "undefined") return;
+    if (location.pathname === "/onboarding") return;
+    const stored = loadPersisted<{ onboardingComplete?: boolean }>("iobattery.app", {});
+    if (!stored?.onboardingComplete) {
+      throw redirect({ to: "/onboarding", replace: true });
+    }
+  },
 
   shellComponent: RootShell,
   component: RootComponent,
