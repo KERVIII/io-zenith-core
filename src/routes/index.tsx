@@ -8,8 +8,12 @@ import {
   CircleHelp,
   Cpu,
   Gauge,
+  GraduationCap,
+  ScrollText,
   Star,
+  Stethoscope,
   Thermometer,
+  Workflow,
   Zap,
 } from "lucide-react";
 import { AppShell } from "@/components/app/app-shell";
@@ -21,7 +25,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useDeviceStore } from "@/stores/device-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useAppStore } from "@/stores/app-store";
+import { useLogStore } from "@/stores/log-store";
 import { analyzeDevice } from "@/features/ai/insight";
+import { computeHealthScore } from "@/features/health/score";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -69,11 +75,14 @@ function Dashboard() {
   const profiles = useProfileStore((s) => s.profiles);
   const activeId = useProfileStore((s) => s.activeId);
   const favorites = useAppStore((s) => s.favorites);
+  const logEntries = useLogStore((s) => s.entries);
 
   const active = profiles.find((p) => p.id === activeId);
   const state = verdict(telemetry.level.value, telemetry.temperature.value);
   const Icon = TONE_ICON[state.tone];
   const insights = analyzeDevice(telemetry, capabilities, history).slice(0, 2);
+  const health = computeHealthScore(telemetry, history);
+  const recentActivity = logEntries.slice(-4).reverse();
 
   return (
     <AppShell title="Dashboard">
@@ -117,6 +126,90 @@ function Dashboard() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Device health score */}
+      <Card className="border-border bg-card py-0">
+        <CardContent className="space-y-3 p-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="text-sm font-semibold">Device health</h2>
+            <p className="text-xs text-on-surface-variant">
+              {health.value === null
+                ? "no measurable factors"
+                : `${health.measured} of ${health.total} factors measured`}
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div
+              className={cn(
+                "flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl",
+                `bg-status-${health.tone}/12 text-status-${health.tone}`,
+              )}
+              role="img"
+              aria-label={
+                health.value === null
+                  ? "Health score unavailable"
+                  : `Health score ${health.value} out of 100`
+              }
+            >
+              <span className="text-xl font-semibold tabular-nums">
+                {health.value ?? "—"}
+              </span>
+              <span className="text-[10px] uppercase tracking-wide">score</span>
+            </div>
+            <div className="min-w-0 flex-1 space-y-1.5">
+              <p className="text-sm font-medium">{health.headline}</p>
+              <ul className="space-y-1">
+                {health.factors.map((factor) => (
+                  <li
+                    key={factor.id}
+                    className="flex items-baseline justify-between gap-2 text-[11px]"
+                  >
+                    <span className="text-on-surface-variant">{factor.label}</span>
+                    <span
+                      className={cn(
+                        "truncate text-right",
+                        factor.score === null
+                          ? "text-on-surface-variant italic"
+                          : "text-foreground",
+                      )}
+                    >
+                      {factor.detail}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick actions */}
+      <section aria-labelledby="quick-actions-heading" className="space-y-2">
+        <h2 id="quick-actions-heading" className="px-1 text-sm font-semibold">
+          Quick actions
+        </h2>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { to: "/doctor", label: "Device Doctor", icon: Stethoscope },
+            { to: "/automation", label: "Automation", icon: Workflow },
+            { to: "/learn", label: "Learning centre", icon: GraduationCap },
+            { to: "/logs", label: "Developer console", icon: ScrollText },
+          ].map(({ to, label, icon: ActionIcon }) => (
+            <Button
+              key={to}
+              asChild
+              variant="secondary"
+              className="min-h-14 justify-start rounded-2xl"
+            >
+              <Link to={to}>
+                <ActionIcon className="mr-2 h-4 w-4 text-primary" aria-hidden />
+                <span className="truncate text-xs font-medium">{label}</span>
+              </Link>
+            </Button>
+          ))}
+        </div>
+      </section>
+
 
       {/* Key metrics */}
       <section aria-labelledby="metrics-heading" className="space-y-2">
@@ -181,6 +274,55 @@ function Dashboard() {
           </motion.div>
         ))}
       </section>
+
+      {/* Recent activity */}
+      {recentActivity.length > 0 && (
+        <section aria-labelledby="activity-heading" className="space-y-2">
+          <div className="flex items-center justify-between px-1">
+            <h2 id="activity-heading" className="text-sm font-semibold">
+              Recent activity
+            </h2>
+            <Link to="/logs" className="text-xs text-primary">
+              Open console
+            </Link>
+          </div>
+          <Card className="border-border bg-card py-0">
+            <CardContent className="p-0">
+              <ul className="divide-y divide-border">
+                {recentActivity.map((entry) => (
+                  <li key={entry.id} className="flex items-start gap-3 px-4 py-3">
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full",
+                        entry.level === "error"
+                          ? "bg-status-critical"
+                          : entry.level === "warn"
+                            ? "bg-status-warning"
+                            : entry.level === "success"
+                              ? "bg-status-healthy"
+                              : "bg-primary",
+                      )}
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-xs">{entry.message}</span>
+                      <span className="block text-[11px] text-on-surface-variant">
+                        {entry.tag} ·{" "}
+                        {new Date(entry.at).toLocaleTimeString(undefined, {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        })}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </section>
+      )}
+
 
       {/* Favorites */}
       {favorites.length > 0 && (
