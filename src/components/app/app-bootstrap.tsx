@@ -4,6 +4,7 @@ import { applyThemeToDocument, useThemeStore } from "@/stores/theme-store";
 import { useAppStore } from "@/stores/app-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useAutomationStore } from "@/stores/automation-store";
+import { useLearnStore } from "@/stores/learn-store";
 import { useAutomationEngine } from "@/hooks/use-automation-engine";
 
 /**
