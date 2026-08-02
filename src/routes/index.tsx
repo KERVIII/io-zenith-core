@@ -8,8 +8,12 @@ import {
   CircleHelp,
   Cpu,
   Gauge,
+  GraduationCap,
+  ScrollText,
   Star,
+  Stethoscope,
   Thermometer,
+  Workflow,
   Zap,
 } from "lucide-react";
 import { AppShell } from "@/components/app/app-shell";
@@ -21,7 +25,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useDeviceStore } from "@/stores/device-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useAppStore } from "@/stores/app-store";
+import { useLogStore } from "@/stores/log-store";
 import { analyzeDevice } from "@/features/ai/insight";
+import { computeHealthScore } from "@/features/health/score";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
